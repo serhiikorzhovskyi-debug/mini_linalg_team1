@@ -1,35 +1,35 @@
-"""A vector of numeric values."""
-
+from collections.abc import Iterable, Iterator
 from numbers import Number
 
 
 class Vector:
-    def __init__(self, values):
-        self._data = tuple(values)
-        if any(not isinstance(value, Number) for value in self._data):
-            raise TypeError("Vector entries must be numeric")
+    def __init__(self, values: Iterable[Number]) -> None:
+        data = tuple(values)
+        if any(not isinstance(value, Number) for value in data):
+            raise TypeError("Vector entries must be numbers")
+        self._data = data
 
     @property
-    def data(self):
+    def data(self) -> tuple[Number, ...]:
         return self._data
 
     @property
-    def shape(self):
-        return (len(self),)
+    def shape(self) -> tuple[int]:
+        return (len(self._data),)
 
-    def __len__(self):
+    def __len__(self) -> int:
         return len(self._data)
 
-    def __iter__(self):
+    def __iter__(self) -> Iterator[Number]:
         return iter(self._data)
 
-    def __getitem__(self, index):
+    def __getitem__(self, index: int | slice) -> Number | tuple[Number, ...]:
         return self._data[index]
 
-    def __eq__(self, other):
+    def __eq__(self, other: object) -> bool:
         if not isinstance(other, Vector):
             return NotImplemented
-        return self.data == other.data
+        return self._data == other._data
 
-    def __repr__(self):
-        return f"Vector({self.data!r})"
+    def __repr__(self) -> str:
+        return f"Vector({list(self._data)!r})"
