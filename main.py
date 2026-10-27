@@ -1,16 +1,23 @@
-# This is a sample Python script.
-
-# Press ⌃R to execute it or replace it with your code.
-# Press Double ⇧ to search everywhere for classes, files, tool windows, actions, and settings.
+from mini_linalg import Matrix, Vector, matrix_matrix_product, matrix_vector_product
 
 
-def print_hi(name):
-    # Use a breakpoint in the code line below to debug your script.
-    print(f'Hi, {name}')  # Press ⌘F8 to toggle the breakpoint.
+def main() -> None:
+    matrix = Matrix([[1, 2, 3], [4, 5, 6]])
+    vector = Vector([2, -1, 3])
+    other = Matrix([[7, 8], [9, 10], [11, 12]])
+
+    vector_result = matrix_vector_product(matrix, vector)
+    matrix_result = matrix_matrix_product(matrix, other)
+
+    assert vector_result == Vector([9, 21])
+    assert matrix_result == Matrix([[58, 64], [139, 154]])
+    assert matrix @ vector == vector_result
+    assert matrix @ other == matrix_result
+
+    print(f"Matrix-vector product: {vector_result}")
+    print(f"Matrix-matrix product: {matrix_result}")
+    print("All example checks passed.")
 
 
-# Press the green button in the gutter to run the script.
-if __name__ == '__main__':
-    print_hi('PyCharm')
-
-# See PyCharm help at https://www.jetbrains.com/help/pycharm/
+if __name__ == "__main__":
+    main()
